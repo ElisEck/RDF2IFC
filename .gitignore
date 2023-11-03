@@ -1,0 +1,14 @@
+./idea
+/IfcOWL2IfcSTEP/target/
+/.idea/modules.xml
+/.idea/misc.xml
+/.idea/IfcSTEP-to-IfcOWL-converters.iml
+/.idea/jarRepositories.xml
+/.idea/vcs.xml
+/IfcOWL2IfcSTEP/jar/IfcOWL2IfcSTEP-1.0.0.jar
+/.idea/encodings.xml
+/.idea/compiler.xml
+/bsp/2023-12-19/catalog-v001.xml
+/.idea/.name
+/IfcOWL2IfcSTEP/dependency-reduced-pom.xml
+/JAR/

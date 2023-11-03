@@ -33,7 +33,8 @@ public class Namespace {
 	/**
 	 * Default IFC4 namespace.
 	 */
-	public static final String IFC4="http://ifcowl.openbimstandards.org/IFC4#";
+	//public static final String IFC4="http://ifcowl.openbimstandards.org/IFC4#";
+	public static final String IFC4="https://standards.buildingsmart.org/IFC/DEV/IFC4/ADD2_TC1/OWL#";
 	/**
 	 * Default IFC4X1_RC1 namespace.
 	 */

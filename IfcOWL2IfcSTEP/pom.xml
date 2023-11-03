@@ -19,7 +19,7 @@
 
 	<groupId>nl.tue.ddss</groupId>
 	<artifactId>IfcOWL2IfcSTEP</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 	<packaging>jar</packaging>
 
 	<name>IfcOWL2IfcSTEP</name>
@@ -39,7 +39,6 @@
 						</goals>
 						<configuration>
 							<transformers>
-
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>nl.tue.ddss.convert.rdf2ifc.Rdf2IfcCmd</mainClass>
@@ -62,7 +61,7 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.3.1</version>
 				<configuration>
-					<outputDirectory>jar</outputDirectory>
+					<outputDirectory>../JAR</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -96,7 +95,7 @@
 	<repositories>
 		<repository>
 			<id>org.topbraid</id>
-			<url>http://topquadrant.com/repository/spin</url>
+			<url>https://archive.topquadrant.com/repository/spin</url>
 		</repository>
 	</repositories>
 
