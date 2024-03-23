@@ -1,5 +1,6 @@
 <!--
   Copyright 2017 Chi Zhang
+  adjusted 2024 ElisEck
   
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License.  You may obtain a copy
@@ -19,11 +20,19 @@
 
 	<groupId>nl.tue.ddss</groupId>
 	<artifactId>IfcOWL2IfcSTEP</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 	<packaging>jar</packaging>
 
 	<name>IfcOWL2IfcSTEP</name>
 	<url>http://maven.apache.org</url>
+
+	<repositories>
+		<!-- local copy of dependency from proprietary repository https://archive.topquadrant.com/repository/spin -->
+		<repository>
+			<id>project-local-maven-repo</id>
+			<url>file:///${project.basedir}/local-maven-repository</url>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>
@@ -39,7 +48,6 @@
 						</goals>
 						<configuration>
 							<transformers>
-
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>nl.tue.ddss.convert.rdf2ifc.Rdf2IfcCmd</mainClass>
@@ -62,7 +70,7 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.3.1</version>
 				<configuration>
-					<outputDirectory>jar</outputDirectory>
+					<outputDirectory>../JAR</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -92,12 +100,4 @@
 			<version>2.0.0</version>
 		</dependency>
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>org.topbraid</id>
-			<url>http://topquadrant.com/repository/spin</url>
-		</repository>
-	</repositories>
-
 </project>

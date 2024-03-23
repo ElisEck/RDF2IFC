@@ -50,7 +50,7 @@ public class IfcVersion {
 	public static final IfcVersion IFC4_ADD1=new IfcVersion("IFC4_ADD1");
 	
 	public static final IfcVersion IFC4_ADD2=new IfcVersion("IFC4_ADD2");
-		
+
 	public static Map<IfcVersion,String> IfcNSMap=new HashMap<IfcVersion,String>();
 	
 	public static Map<String, IfcVersion> NSIfcMap=new HashMap<String,IfcVersion>();
@@ -85,7 +85,7 @@ public class IfcVersion {
 	public static void initDefaultIfcNsMap(){
 		IfcNSMap.put(IFC2X3_TC1, Namespace.IFC2X3_TC1);
 		IfcNSMap.put(IFC2X3_FINAL, Namespace.IFC2X3_FINAL);
-		IfcNSMap.put(IFC4, Namespace.IFC4);
+		IfcNSMap.put(IFC4, "https://standards.buildingsmart.org/IFC/DEV/IFC4/ADD2_TC1/OWL#");
 		IfcNSMap.put(IFC4X1_RC3, Namespace.IFC4X1_RC3);
 		IfcNSMap.put(IFC4_ADD1,Namespace.IFC4_ADD1);
 		IfcNSMap.put(IFC4_ADD2, Namespace.IFC4_ADD2);
@@ -98,7 +98,7 @@ public class IfcVersion {
 	public static void initDefaultNsIfcMap() throws IfcVersionException{
 			NSIfcMap.put(Namespace.IFC2X3_TC1,IFC2X3_TC1);
 			NSIfcMap.put(Namespace.IFC2X3_FINAL,IFC2X3_FINAL);
-			NSIfcMap.put( Namespace.IFC4,IFC4);
+			NSIfcMap.put( "https://standards.buildingsmart.org/IFC/DEV/IFC4/ADD2_TC1/OWL#",IFC4);
 			NSIfcMap.put( Namespace.IFC4X1_RC3,IFC4X1_RC3);
 			NSIfcMap.put(Namespace.IFC4_ADD1,IFC4_ADD1);
 			NSIfcMap.put(Namespace.IFC4_ADD2,IFC4_ADD2);
@@ -111,7 +111,7 @@ public class IfcVersion {
 	public static void initIfcNsMap() throws IfcVersionException{
 			IfcNSMap.put(IFC2X3_TC1, loadNamespace(IFC2X3_TC1));
 			IfcNSMap.put(IFC2X3_FINAL, loadNamespace(IFC2X3_FINAL));
-			IfcNSMap.put(IFC4, loadNamespace(IFC4));
+			IfcNSMap.put(IFC4, "https://standards.buildingsmart.org/IFC/DEV/IFC4/ADD2_TC1/OWL#");
 			IfcNSMap.put(IFC4X1_RC3, loadNamespace(IFC4X1_RC3));
 			IfcNSMap.put(IFC4_ADD1,loadNamespace(IFC4_ADD1));
 			IfcNSMap.put(IFC4_ADD2, loadNamespace(IFC4_ADD2));
@@ -124,7 +124,7 @@ public class IfcVersion {
 	public static void initNsIfcMap() throws IfcVersionException{
 			NSIfcMap.put( loadNamespace(IFC2X3_TC1),IFC2X3_TC1);
 			NSIfcMap.put(loadNamespace(IFC2X3_FINAL),IFC2X3_FINAL);
-			NSIfcMap.put(loadNamespace(IFC4),IFC4);
+			NSIfcMap.put("https://standards.buildingsmart.org/IFC/DEV/IFC4/ADD2_TC1/OWL#",IFC4);
 			NSIfcMap.put(loadNamespace(IFC4X1_RC3),IFC4X1_RC3);
 			NSIfcMap.put(loadNamespace(IFC4_ADD1),IFC4_ADD1);
 			NSIfcMap.put(loadNamespace(IFC4_ADD2),IFC4_ADD2);

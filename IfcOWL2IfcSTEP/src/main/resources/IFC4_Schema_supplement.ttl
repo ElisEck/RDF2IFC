@@ -1,6 +1,7 @@
 @base <http://ifcowl.openbimstandards.org/IFC4> .
-@prefix : <http://ifcowl.openbimstandards.org/IFC4#> .
-@prefix ifc: <http://ifcowl.openbimstandards.org/IFC4#> .
+@prefix : <https://standards.buildingsmart.org/IFC/DEV/IFC4/ADD2_TC1/OWL#> .
+#@prefix ifc: <http://ifcowl.openbimstandards.org/IFC4#> .
+@prefix ifc: <https://standards.buildingsmart.org/IFC/DEV/IFC4/ADD2_TC1/OWL#> .
 @prefix supply: <http://www.tue.nl/ddss/ifcOWL_supplementary#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .

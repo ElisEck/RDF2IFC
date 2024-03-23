@@ -19,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -32,6 +33,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import java.util.Locale;
 
 import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.ext.com.google.common.base.Charsets;
@@ -239,7 +241,7 @@ public class StreamIfcWriter extends Rdf2IfcConverter {
 			try {
 				read(inputUri, lang);
 			} catch (NoSuchElementException e) {
-				throw new IfcVersionException("used ifcOWL ontology does not match the data");
+				throw new IfcVersionException("used ifcOWL ontology does not match the data", e);
 			}
 			write("Loading finished!");
 			// reArrangeListValues();
@@ -271,16 +273,18 @@ public class StreamIfcWriter extends Rdf2IfcConverter {
 	 * @return 
 	 */
 	public IfcVersion selectSchema(String input, Lang lang) throws IfcVersionException {
-		PipedRDFIterator<Triple> iter = new PipedRDFIterator<Triple>();
+		PipedRDFIterator<Triple> iter = new PipedRDFIterator<Triple>(50_000);
 		final PipedRDFStream<Triple> stream = new PipedTriplesStream(iter);
 		ExecutorService executor = Executors.newSingleThreadExecutor();
 		Node ontology = null;
-		Runnable parser = new Runnable() {
-			public void run() {
-				RDFDataMgr.parse(stream, input, lang);
-			}
-		};
-		executor.submit(parser);
+//		Runnable parser = new Runnable() {
+//			public void run() {
+//				RDFDataMgr.parse(stream, input, lang);
+//			}
+//		};
+//		var parsingFuture = executor.submit(parser);
+
+		RDFDataMgr.parse(stream, input, lang);
 
 		while (iter.hasNext()) {
 			Triple t = iter.next();
@@ -338,7 +342,7 @@ public class StreamIfcWriter extends Rdf2IfcConverter {
 	 * @throws FileNotFoundException
 	 */
 	public void read(String input, Lang lang) throws FileNotFoundException {
-		PipedRDFIterator<Triple> iter = new PipedRDFIterator<Triple>();
+		PipedRDFIterator<Triple> iter = new PipedRDFIterator<Triple>(50_000);
 	//	InputStream in = new FileInputStream(input);
 		final PipedRDFStream<Triple> stream = new PipedTriplesStream(iter);
 		ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -366,14 +370,24 @@ public class StreamIfcWriter extends Rdf2IfcConverter {
 						ifcvo.setList(new HashMap<Integer, Object>());
 					}
 					ifcvo.setName(on);
-					try {
+					if (sn.startsWith(on)) {
+						//					try {
 						Integer i = Integer.parseInt(sn.substring(sn.lastIndexOf("_") + 1));
 						ifcvo.setLineNum(i);
 						maxLineNum = Math.max(maxLineNum, i);
-					} catch (NumberFormatException e) {
-						continue;
+//					} catch (NumberFormatException e) {
+//						continue;
+					} else {
+						//System.out.println("test");
 					}
 				}
+//				else {
+//					System.out.println(t);
+//					IfcObject ifcvo = ifcMap.get(subject.getLocalName());
+//					ifcvo.setName(on);
+//					ifcvo.setLineNum(maxLineNum);
+//					maxLineNum = Math.max(maxLineNum, i);
+//                }
 			} else if (pn.equals("hasExpressID")) {
 				IfcObject ifcvo = ifcMap.get(subject.getLocalName());
 				if (ifcvo == null) {
@@ -517,7 +531,7 @@ public class StreamIfcWriter extends Rdf2IfcConverter {
 	 * @param lang RDF language of the input IFC RDF data
 	 */
 	public void read(InputStream input, Lang lang) {
-		PipedRDFIterator<Triple> iter = new PipedRDFIterator<Triple>();
+		PipedRDFIterator<Triple> iter = new PipedRDFIterator<Triple>(50_000);
 		final PipedRDFStream<Triple> stream = new PipedTriplesStream(iter);
 		ExecutorService executor = Executors.newSingleThreadExecutor();
 		Runnable parser = new Runnable() {
@@ -745,7 +759,7 @@ public class StreamIfcWriter extends Rdf2IfcConverter {
 	 * 
 	 * @throws IOException
 	 */
-	public void writeHeader() throws IOException {
+	public void writeHeader() throws IOException { //TODO hier HEADER anpassen
 		println("ISO-10303-21;");
 		println("HEADER;");
 
@@ -780,7 +794,7 @@ public class StreamIfcWriter extends Rdf2IfcConverter {
 					LOGGER.log(Level.INFO,
 							"The IFC object #" + maxLineNum + " does not have express id. Assigned one for it.");
 				} catch (NumberFormatException e) {
-
+					LOGGER.log(Level.INFO, "NumberFormatException");
 				}
 			}
 		}
@@ -806,7 +820,7 @@ public class StreamIfcWriter extends Rdf2IfcConverter {
 		print(upperCase);
 		print(OPEN_PAREN);
 		boolean isFirst = true;
-		List<Property> properties = class2Properties.get(entityMap.get(ifcobject.getName()));
+		List<Property> properties = class2Properties.get(entityMap.get(ifcobject.getName())); //entspricht "Attributen"
 		HashMap<Integer, Object> values = ifcobject.getObjectList();
 		for (int i = 0; i < properties.size(); i++) {
 			Resource range = properties.get(i).getProperty(RDFS.range).getObject().asResource();
@@ -865,7 +879,20 @@ public class StreamIfcWriter extends Rdf2IfcConverter {
 
 	private void writePrimitive(String str) throws IOException {
 		if (valueMap.get(str) != null) {
-			print((String) valueMap.get(str));
+			//TODO hier Schreibweise ändern, wenn es ein Real ist
+			if (str.startsWith("IfcReal")) {
+				String original = (String) valueMap.get(str);
+				Double d = Double.parseDouble(original);
+//				DecimalFormat decimalFormat = new DecimalFormat("0.0");
+//				String numberAsString = decimalFormat.format(d);
+//				print(numberAsString);
+				//String numberAsString = String.format("%.2f", d);
+				String numberAsString = String.format(Locale.ENGLISH, "%.2f", d);
+				print(numberAsString);
+			} else {
+				print((String) valueMap.get(str));
+			}
+
 		} else
 			print(DOLLAR);
 	}
@@ -1033,7 +1060,9 @@ public class StreamIfcWriter extends Rdf2IfcConverter {
 
 
 	private boolean isOwlList(String str) {
-		if (listMap.get(typeMap.get(str)) != null || (typeMap.get(str) != null && typeMap.get(str).endsWith("_List"))) {
+		if (listMap.get(typeMap.get(str)) != null ||
+				(typeMap.get(str) != null && typeMap.get(str).endsWith("_List"))
+		) {
 			return true;
 		} else
 			return false;

@@ -23,4 +23,8 @@ public class IfcVersionException extends Exception {
 	public IfcVersionException(String message) {
 		super(message);
 	}
+
+	public IfcVersionException(String message, Throwable cause) {
+		super(message, cause);
+	}
 }
