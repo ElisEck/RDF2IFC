@@ -1,5 +1,6 @@
 <!--
   Copyright 2017 Chi Zhang
+  adjusted 2024 ElisEck
   
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License.  You may obtain a copy
@@ -24,6 +25,14 @@
 
 	<name>IfcOWL2IfcSTEP</name>
 	<url>http://maven.apache.org</url>
+
+	<repositories>
+		<!-- local copy of dependency from proprietary repository https://archive.topquadrant.com/repository/spin -->
+		<repository>
+			<id>project-local-maven-repo</id>
+			<url>file:///${project.basedir}/local-maven-repository</url>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>
@@ -91,12 +100,4 @@
 			<version>2.0.0</version>
 		</dependency>
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>org.topbraid</id>
-			<url>https://archive.topquadrant.com/repository/spin</url>
-		</repository>
-	</repositories>
-
 </project>
