@@ -19,11 +19,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>nl.tue.ddss</groupId>
-	<artifactId>IfcOWL2IfcSTEP</artifactId>
+	<artifactId>RDF2IFC</artifactId>
 	<version>1.1.0</version>
 	<packaging>jar</packaging>
 
-	<name>IfcOWL2IfcSTEP</name>
 	<url>http://maven.apache.org</url>
 
 	<repositories>
@@ -70,7 +69,7 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.3.1</version>
 				<configuration>
-					<outputDirectory>../JAR</outputDirectory>
+					<outputDirectory>JAR</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
